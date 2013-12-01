@@ -1,13 +1,9 @@
 function E2_Q8()   
-    %% ICs:
-    g = -9.81;              % gravitational acceleration in m/s^2
-    r0 = 800.0;               % length of pendulum arm in m
-    m = 3.0;               % mass = 3.0 kg, assume rod has neglible mass
-    k=9800; %spring constant
-    lo=400; 
-    phi_0 = 30 * pi/180;             % initial phi value = 30 degrees, convert to rad
+    phi_0 = 30 * pi/180; % initial phi value = 30 degrees, convert to rad
+    r0 = 800.0; % length of pendulum arm in m
     theta_dot_0 = 6/ (sin(phi_0)*r0);   % velocity component in theta direction = 0.5 m/s
-
+    
+    
     %% Define state variables: z1 = phi, z2 = d(phi)/dt, z3 = theta, z4 = d(theta)/dt
     % Specify initial conditions
     z1_0 = phi_0;  %phi
@@ -22,16 +18,27 @@ function E2_Q8()
     [time, zout] = ode45(@sphpend_fun, t_span, Z_0);
 %%
     function states = sphpend_fun(T, ZZ) %all phi = 0 b/c planar spring pendulum
+        %% ICs:
+        g = -9.81;              % gravitational acceleration in m/s^2
+        m = 3.0;               % mass = 3.0 kg, assume rod has neglible mass
+        k=9800; %spring constant
+        lo=400; 
+        omega=.5; %rad/sec
+        
         rd=ZZ(6); pd=ZZ(2); td=ZZ(4);
         r= ZZ(5); p=ZZ(1); t=ZZ(3);
-
+        
+        %velocity eqs for spring pendulum without rotation:
         z1 = 0; %phi dot
         z3 = td; %theta dot
         z5= rd;%r dot
-
-        z2=0; %( (-g*sin(t)/m) - (2*rd*pd) + (r*td^2*sin(p)*cos(p)) )/r; %phi dd
+        
+        %acceleration eqs for spring pendulum without rotation:
+        z2=0; %phi dd
         z4=(-2*rd*td/r) - (2*pd*td*cos(p)/sin(p)); %theta dd
         z6=(g*cos(p)/m) - (k*(r-lo)/m) + (r*pd^2) + (r*td^2*sin(p)^2); %r dd
+        
+        d=6; axc=-d*sin(omega);
 
         states = [z1;z2;z3;z4;z5;z6];
     end
