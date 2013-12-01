@@ -9,7 +9,7 @@ function E2_Q8()
     theta_dot_0 = 6/ (sin(phi_0)*r0);   % velocity component in theta direction = 0.5 m/s
 
     %% Define state variables: z1 = phi, z2 = d(phi)/dt, z3 = theta, z4 = d(theta)/dt
-    % Specify initial conditions. 
+    % Specify initial conditions
     z1_0 = phi_0;  %phi
     z2_0 = 40; %phi dot
     z3_0 = 30;    %theta
@@ -18,26 +18,21 @@ function E2_Q8()
     z6_0=100; %initial spring acceleration
 %%
     Z_0 = [z1_0, z2_0, z3_0, z4_0, z5_0, z6_0];
-    t_span = [0:0.01:10];  % max time span for simulation 
+    t_span = [0:0.01:10];  %time span for simulation 
     [time, zout] = ode45(@sphpend_fun, t_span, Z_0);
 %%
     function states = sphpend_fun(T, ZZ) %all phi = 0 b/c planar spring pendulum
         rd=ZZ(6); pd=ZZ(2); td=ZZ(4);
         r= ZZ(5); p=ZZ(1); t=ZZ(3);
 
-        z1 = pd; %phi dot
-%         z2 = (r*td^2*sin(p)*cos(p))-(g*sin(p)/r)-(2*pd*rd);%phi double dot
-% 
+        z1 = 0; %phi dot
         z3 = td; %theta dot
-%         z4 = ( (-2*rd*td*cos(p))+(r*pd*td*sin(t)) )/(r*sin(p)); %theta double dot
-% 
         z5= rd;%r dot
-%         z6= (-k*(lo-r)/m)+(9.8*cos(p))+(r*td^2*(sin(p)^2))+(r*td^2); %r double dot
-        z2=0; % phi dd %( (-g*sin(t)/m) - (2*rd*pd) + (r*td^2*sin(p)*cos(p)) )/r; %phi dd
+
+        z2=0; %( (-g*sin(t)/m) - (2*rd*pd) + (r*td^2*sin(p)*cos(p)) )/r; %phi dd
         z4=(-2*rd*td/r) - (2*pd*td*cos(p)/sin(p)); %theta dd
         z6=(g*cos(p)/m) - (k*(r-lo)/m) + (r*pd^2) + (r*td^2*sin(p)^2); %r dd
 
-        %
         states = [z1;z2;z3;z4;z5;z6];
     end
 end
