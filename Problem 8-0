@@ -12,8 +12,10 @@ function E2_Q8()
     z4_0 = theta_dot_0; %theta dot
     z5_0 =r0; %initial spring length
     z6_0=100; %initial spring acceleration
+    d=.8; %m, arm length of the spining column, constant
+    omega=.5; %rad/sec
 %%
-    Z_0 = [z1_0, z2_0, z3_0, z4_0, z5_0, z6_0];
+    Z_0 = [z1_0, z2_0, z3_0, z4_0, z5_0, z6_0, -d*sin(omega), d*cos(omega), 0,0];
     t_span = [0:0.01:10];  %time span for simulation 
     [time, zout] = ode45(@sphpend_fun, t_span, Z_0);
 %%
@@ -23,8 +25,9 @@ function E2_Q8()
         m = 3.0;               % mass = 3.0 kg, assume rod has neglible mass
         k=9800; %spring constant
         lo=400; 
-        omega=.5; %rad/sec
         
+        %Extract positions and velocities from incoming integrated vector
+       
         rd=ZZ(6); pd=ZZ(2); td=ZZ(4);
         r= ZZ(5); p=ZZ(1); t=ZZ(3);
         
@@ -38,8 +41,15 @@ function E2_Q8()
         z4=(-2*rd*td/r) - (2*pd*td*cos(p)/sin(p)); %theta dd
         z6=(g*cos(p)/m) - (k*(r-lo)/m) + (r*pd^2) + (r*td^2*sin(p)^2); %r dd
         
-        d=6; axc=-d*sin(omega);
+        %acceleration of the center spining arm, should be circular
+        axc=-d*sin(omega); ayc=d*cos(omega);
+        %velocities of the center, spinning arm:
+        vxc=ZZ(7); vyc=ZZ(8);
+        %position of the center, spinning arm:
+        pxc=ZZ(9); pyc=ZZ(10);
+        
+        
 
-        states = [z1;z2;z3;z4;z5;z6];
+        states = [z1;z2;z3;z4;z5;z6; axc;ayc; vxc;vyc];
     end
 end
