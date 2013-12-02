@@ -54,4 +54,7 @@ function E2_Q8()
 
         states = [z1;z2;z3;z4;z5;z6; axc;ayc; vxc;vyc; psx;psy;psz];
     end
+
+    plot(t,states(11))
+
 end
