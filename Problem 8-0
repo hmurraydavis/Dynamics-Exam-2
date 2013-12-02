@@ -15,7 +15,7 @@ function E2_Q8()
     d=.8; %m, arm length of the spining column, constant
     omega=.5; %rad/sec
 %%
-    Z_0 = [z1_0, z2_0, z3_0, z4_0, z5_0, z6_0, -d*sin(omega), d*cos(omega), 0,0];
+    Z_0 = [z1_0, z2_0, z3_0, z4_0, z5_0, z6_0, -d*sin(omega), d*cos(omega), 0,0, 0,0,0];
     t_span = [0:0.01:10];  %time span for simulation 
     [time, zout] = ode45(@sphpend_fun, t_span, Z_0);
 %%
@@ -48,8 +48,10 @@ function E2_Q8()
         %position of the center, spinning arm:
         pxc=ZZ(9); pyc=ZZ(10);
         
-        
+        rps=r*sin(t); %projection of spring onto the x-y plane
+        psx=rps*pxc/(pxc+pyc); psy=rps*pyc/(pxc+pyc);
+        psz=r*cos(t);
 
-        states = [z1;z2;z3;z4;z5;z6; axc;ayc; vxc;vyc];
+        states = [z1;z2;z3;z4;z5;z6; axc;ayc; vxc;vyc; psx;psy;psz];
     end
 end
