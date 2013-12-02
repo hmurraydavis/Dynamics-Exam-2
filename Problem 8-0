@@ -14,6 +14,7 @@ function E2_Q8()
     z6_0=100; %initial spring acceleration
     d=.8; %m, arm length of the spining column, constant
     omega=.5; %rad/sec
+    Rx=[]; Ry=[]; Rz=[];
 %%
     Z_0 = [z1_0, z2_0, z3_0, z4_0, z5_0, z6_0, -d*sin(omega), d*cos(omega), 0,0, 0,0,0];
     t_span = [0:0.01:10];  %time span for simulation 
@@ -51,10 +52,19 @@ function E2_Q8()
         rps=r*sin(t); %projection of spring onto the x-y plane
         psx=rps*pxc/(pxc+pyc); psy=rps*pyc/(pxc+pyc);
         psz=r*cos(t);
+            Rx=[Rx,psx+pxc]; Ry=[Ry,psy+pyc]; Rz=[Rz,psz];
 
         states = [z1;z2;z3;z4;z5;z6; axc;ayc; vxc;vyc; psx;psy;psz];
     end
 
-    plot(t,states(11))
+    
+    TtSpan=linspace(0,time(length(time)),length(Rx));
+    whos Rx Ry Rz TtSpan
+    min(Rz)
+    max(Rx)
+    plot3(Rx,Ry,Rz)
+    xlabel('x')
+    ylabel('y')
+    zlabel('z')
 
 end
