@@ -1,0 +1,8 @@
+phi=0; theta=0; psi=0;
+r1_313 = [ cos(phi)  sin(phi)  0; -sin(phi) cos(phi) 0; 0  0  1];
+r2_313 = [ 1  0  0; 0  cos(theta)  sin(theta);  0  -sin(theta)  cos(theta)  ];
+r3_313 = [ cos(psi)  sin(psi)  0;  -sin(psi)  cos(psi)  0; 0  0  1];
+
+r_313 = r2_313*r1_313;
+
+I02=[4000,0,0;0,7500,0;0,0,8500]
