@@ -2,7 +2,7 @@ function E2_Q8()
 
     Z=[pi/2,0,0,.1,-.2,.5]; %[theta,phi,psi,wx,wy,wx]
     
-    t_span = [0:0.01:10];  %time span for simulation 
+    t_span = [0:0.01:35];  %time span for simulation 
     [time, zout] = ode45(@sphpend_fun, t_span, Z);
   
     function states = sphpend_fun(T, ZZ)
@@ -26,5 +26,21 @@ function E2_Q8()
         states=[angledot(2);angledot(1);angledot(3);w01_02dot(1);w01_02dot(2);w01_02dot(3)];
     end
 
-    plot(time,zout(:,1))
+    plot(time,zout(:,1),'LineWidth',3)
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Angle (rad)','FontSize', 16)
+    title('Theta over Time','FontSize', 20)
+    
+    figure;
+    plot(time,zout(:,2),'LineWidth',3)
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Angle (rad)','FontSize', 16)
+    title('Phi over Time','FontSize', 20)
+    
+    figure;
+    plot(time,zout(:,3),'LineWidth',3)
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Angle (rad)','FontSize', 16)
+    title('Psi over Time','FontSize', 20)
+    
 end
