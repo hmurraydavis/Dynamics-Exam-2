@@ -25,14 +25,11 @@ function E2_Q8()
         
         %Extract positions and velocities from incoming integrated vector
        
-        ld=ZZ(1); td=ZZ(3);
+        ld=ZZ(2); td=ZZ(4);
+        l=ZZ(1); t=ZZ(3);
         
-        ldd=6;
-        tdd=5;
-        
-        
-       
-       
+        ldd=(((k*(l-lo)-m*g*cos(t))/m)+(ld^2)+(l*ld^2)+(2*ld)+(l*td))/(-l);
+        tdd=(-g*sin(t)+d*omega^2*cos(t))/l;
 
         states = [ld;ldd; td;tdd];
     end
