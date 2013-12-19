@@ -1,6 +1,6 @@
 function E2_Q8()   
     phi_0 = 30 * pi/180; % initial phi value = 30 degrees, convert to rad
-    r0 = 2; % length of pendulum arm in m
+    r0 = 1; % length of pendulum arm in m
     theta_dot_0 = 6/ (sin(phi_0)*r0);   % velocity component in theta direction = 0.5 m/s
         
     %% Define state variables: z1 = ld,ldd,td,tdd
@@ -24,7 +24,6 @@ function E2_Q8()
         lo=1; %m 
         
         %Extract positions and velocities from incoming integrated vector
-       
         ld=ZZ(2); td=ZZ(4);
         l=ZZ(1); t=ZZ(3);
         
@@ -33,5 +32,11 @@ function E2_Q8()
 
         states = [ld;ldd; td;tdd];
     end
+
+%figure;
+%plot(time, zout(:,1))
+
+%figure;
+%plot(time, zout(:,2))
 
 end
