@@ -1,18 +1,13 @@
-function E2_Q8()   
-    phi_0 = 30 * pi/180; % initial phi value = 30 degrees, convert to rad
-    r0 = 1; % length of pendulum arm in m
-    theta_dot_0 = 6/ (sin(phi_0)*r0);   % velocity component in theta direction = 0.5 m/s
-        
-    %% Define state variables: z1 = ld,ldd,td,tdd
-    % Specify initial conditions
-    z1_0 = 30;    %theta
-    z2_0 = theta_dot_0; %theta dot
-    z3_0 =r0; %initial spring length
-    z4_0=100; %initial spring acceleration
+function E2_Q8()      
+    %% Specify initial conditions
+    z1_0 = pi/5;    %theta
+    z2_0 = 1.6; %theta dot
+    z3_0 =4; %initial spring length
+    z4_0=2; %initial spring acceleration
     d=.8; %m, arm length of the spining column, constant
     omega=.5; %rad/sec
 %%
-    Z_0 = [z1_0, z2_0, z3_0, z4_0];
+    Z_0 = [z3_0, z4_0, z1_0, z2_0] %z1 = ld,ldd,td,tdd
     t_span = [0:0.01:10];  %time span for simulation 
     [time, zout] = ode45(@sphpend_fun, t_span, Z_0);
 %%
@@ -27,16 +22,21 @@ function E2_Q8()
         ld=ZZ(2); td=ZZ(4);
         l=ZZ(1); t=ZZ(3);
         
-        ldd=(((k*(l-lo)-m*g*cos(t))/m)+(ld^2)+(l*ld^2)+(2*ld)+(l*td))/(-l);
+        ldd=(((k*(l-lo)-m*g*cos(t))/m)+(ld^2)+(l*ld^2)+(2*ld)+(l*td))/(l);
         tdd=(-g*sin(t)+d*omega^2*cos(t))/l;
 
         states = [ld;ldd; td;tdd];
     end
 
-%figure;
-%plot(time, zout(:,1))
+    figure;
+    plot(time, zout(:,1))
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Length Spring (m)','FontSize', 16)
+    title('Spring Length over Time','FontSize', 20)
 
-%figure;
-%plot(time, zout(:,2))
-
+    figure;
+    plot(time, zout(:,2))
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Angle (rad)','FontSize', 16)
+    title('Theta over Time','FontSize', 20)
 end
