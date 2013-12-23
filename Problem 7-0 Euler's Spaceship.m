@@ -1,4 +1,4 @@
-function E2_Q8()
+function E2_Q7()
 
     Z=[pi/2,0,0,.1,-.2,.5]; %[theta,phi,psi,wx,wy,wx]
     
@@ -32,15 +32,33 @@ function E2_Q8()
     title('Theta over Time','FontSize', 20)
     
     figure;
-    plot(time,zout(:,2),'LineWidth',3)
+    plot(time,zout(:,2), 'r','LineWidth',3)
     xlabel('Time (s)', 'FontSize', 16)
     ylabel('Angle (rad)','FontSize', 16)
     title('Phi over Time','FontSize', 20)
     
     figure;
-    plot(time,zout(:,3),'LineWidth',3)
+    plot(time,zout(:,3),'c','LineWidth',3)
     xlabel('Time (s)', 'FontSize', 16)
     ylabel('Angle (rad)','FontSize', 16)
     title('Psi over Time','FontSize', 20)
+    
+    figure;
+    plot(time,zout(:,4),'m','LineWidth',3)
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Velocity (rad/sec)','FontSize', 16)
+    title('Velocity in Theta over time','FontSize', 20)
+    
+    figure;
+    plot(time,zout(:,5),'g','LineWidth',3)
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Velocity (rad/sec)','FontSize', 16)
+    title('Velocity in Phi over time','FontSize', 20)
+    
+    figure;
+    plot(time,zout(:,6),'y','LineWidth',3)
+    xlabel('Time (s)', 'FontSize', 16)
+    ylabel('Velocity (rad/sec)','FontSize', 16)
+    title('Velocity in Psi over time','FontSize', 20)
     
 end
