@@ -3,12 +3,12 @@ function E2_Q8()
     z1_0 = pi/5;    %theta
     z2_0 = 1.6; %theta dot
     z3_0 =4; %initial spring length
-    z4_0=2; %initial spring acceleration
+    z4_0=.2; %initial spring acceleration
     d=.8; %m, arm length of the spining column, constant
     omega=.5; %rad/sec
 %%
-    Z_0 = [z3_0, z4_0, z1_0, z2_0] %z1 = ld,ldd,td,tdd
-    t_span = [0:0.01:10];  %time span for simulation 
+    Z_0 = [z3_0, z4_0, z1_0, z2_0]; %z1 = ld,ldd,td,tdd
+    t_span = [0:0.01:30];  %time span for simulation 
     [time, zout] = ode45(@sphpend_fun, t_span, Z_0);
 %%
     function states = sphpend_fun(T, ZZ) %all phi = 0 b/c planar spring pendulum
@@ -23,7 +23,8 @@ function E2_Q8()
         l=ZZ(1); t=ZZ(3);
         
         ldd=( ((k*(lo-l)-m*g*cos(t))/m) +(2*ld^2)+(l*ld^2)+(ld) )/(-l);
-        tdd=( -g*sin(t)+d*omega^2*cos(t)-2*omega*ld-2*omega*l*ld-omega*l)/l;
+        T1=(ld);
+        tdd=( -g*sin(t)+d*omega^2*cos(t)-2*omega*ld-2*omega*l*ld-omega*l)/-l;
 
         states = [ld;ldd; td;tdd];
     end
