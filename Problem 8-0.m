@@ -8,7 +8,7 @@ function E2_Q8()
     omega=.5; %rad/sec
 %%
     Z_0 = [z3_0, z4_0, z1_0, z2_0]; %z1 = ld,ldd,td,tdd
-    t_span = [0:0.01:30];  %time span for simulation 
+    t_span = [0:0.004:15];  %time span for simulation 
     [time, zout] = ode45(@sphpend_fun, t_span, Z_0);
 %%
     function states = sphpend_fun(T, ZZ) %all phi = 0 b/c planar spring pendulum
@@ -30,13 +30,13 @@ function E2_Q8()
     end
 
     figure;
-    plot(time, zout(:,1))
+    plot(time, zout(:,1),'m','LineWidth',2.5)
     xlabel('Time (s)', 'FontSize', 16)
     ylabel('Length Spring (m)','FontSize', 16)
     title('Spring Length over Time','FontSize', 20)
 
     figure;
-    plot(time, zout(:,2))
+    plot(time, zout(:,2),'LineWidth',3)
     xlabel('Time (s)', 'FontSize', 16)
     ylabel('Angle (rad)','FontSize', 16)
     title('Theta over Time','FontSize', 20)
